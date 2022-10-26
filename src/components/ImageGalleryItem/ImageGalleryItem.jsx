@@ -5,32 +5,30 @@ import css from './ImageGalleryItem.module.css';
 
 export class ImageGalleryItem extends Component {
   state = {
-    ModalIsOpen: false,
+    modalIsOpen: false,
   };
 
-  openModal = () => {
-    this.setState({ ModalIsOpen: true });
-  };
-
-  closeModal = () => {
-    this.setState({ ModalIsOpen: false });
+  toggleModal = () => {
+    this.setState(({ modalIsOpen }) => ({
+      modalIsOpen: !modalIsOpen,
+    }));
   };
 
   render() {
     const { previewImage, largeImage, tags } = this.props;
-    const { ModalIsOpen } = this.state;
+    const { modalIsOpen } = this.state;
 
     return (
       <>
-        <li className={css.imageGalleryItem} onClick={this.openModal}>
+        <li className={css.imageGalleryItem} onClick={this.toggleModal}>
           <img
             className={css.imageGalleryItemImage}
             src={previewImage}
             alt={tags}
           />
         </li>
-        {ModalIsOpen && (
-          <Modal closeModal={this.closeModal}>
+        {modalIsOpen && (
+          <Modal closeModal={this.toggleModal}>
             <img src={largeImage} alt={tags} />
             <p className={css.imageTitle}>{tags}</p>
           </Modal>
